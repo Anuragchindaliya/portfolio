@@ -5,12 +5,29 @@ import { motion } from 'framer-motion';
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './index.scss';
-
+import { ImgUrl } from '../../model';
+interface WorkRes {
+    _createdAt: string
+    _id: string
+    _rev: string
+    _type: string
+    _updatedAt: string
+    codeLink: string
+    description: string
+    imgUrl: ImgUrl
+    projectLink: string
+    tags: string[]
+    title: string
+}
+interface Animate {
+    y: number
+    opacity: number
+}
 const Work = () => {
-    const [works, setWorks] = useState<any>([]);
-    const [filterWork, setFilterWork] = useState([]);
-    const [activeFilter, setActiveFilter] = useState<any>('All');
-    const [animateCard, setAnimateCard] = useState<any>({ y: 0, opacity: 1 });
+    const [works, setWorks] = useState<WorkRes[]>([]);
+    const [filterWork, setFilterWork] = useState<WorkRes[]>([]);
+    const [activeFilter, setActiveFilter] = useState<string>('All');
+    const [animateCard, setAnimateCard] = useState<Animate>({ y: 0, opacity: 1 });
 
     useEffect(() => {
         const query = '*[_type == "works"]';
@@ -23,15 +40,15 @@ const Work = () => {
 
     const handleWorkFilter = (item: string) => {
         setActiveFilter(item);
-        setAnimateCard([{ y: 100, opacity: 0 }]);
+        setAnimateCard({ y: 100, opacity: 0 });
 
         setTimeout(() => {
-            setAnimateCard([{ y: 0, opacity: 1 }]);
+            setAnimateCard({ y: 0, opacity: 1 });
 
             if (item === 'All') {
                 setFilterWork(works);
             } else {
-                setFilterWork(works?.filter((work: any) => work['tags'].includes(item)));
+                setFilterWork(works?.filter((work: WorkRes) => work['tags'].includes(item)));
             }
         }, 500);
     };
@@ -62,7 +79,10 @@ const Work = () => {
                         <div
                             className="app__work-img app__flex"
                         >
-                            <img src={urlFor(work['imgUrl']).url()} alt={work['name']} />
+                            <img src={urlFor(work['imgUrl']).url()}
+                                alt="project preview"
+                            // alt={work['name']}
+                            />
 
                             <motion.div
                                 whileHover={{ opacity: [0, 1] }}
@@ -80,6 +100,7 @@ const Work = () => {
                                         <AiFillEye />
                                     </motion.div>
                                 </a>
+
                                 <a href={work['codeLink']} target="_blank" rel="noreferrer">
                                     <motion.div
                                         whileInView={{ scale: [0, 1] }}

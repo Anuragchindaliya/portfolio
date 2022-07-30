@@ -5,9 +5,19 @@ import { motion } from 'framer-motion';
 import { AppWrap } from '../../wrapper';
 import './index.scss';
 import { urlFor, client } from '../../client';
-
+import { ImgUrl } from '../../model';
+interface AboutRes {
+    _createdAt: string
+    _id: string
+    _rev: string
+    _type: string
+    _updatedAt: string
+    description: string
+    imgUrl: ImgUrl
+    title: string
+}
 const About = () => {
-    const [abouts, setAbouts] = useState([]);
+    const [abouts, setAbouts] = useState<AboutRes[]>([]);
 
     useEffect(() => {
         const query = '*[_type == "abouts"]';
@@ -21,7 +31,7 @@ const About = () => {
             <h2 className="head-text">I Know that <span>Good Apps</span> <br />means  <span>Good Business</span></h2>
 
             <div className="app__profiles">
-                {abouts && abouts.map((about, index) => (
+                {abouts?.map((about, index) => (
                     <motion.div
                         whileInView={{ opacity: 1 }}
                         whileHover={{ scale: 1.1 }}

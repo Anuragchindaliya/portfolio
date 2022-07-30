@@ -5,11 +5,32 @@ import { motion } from 'framer-motion';
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './index.scss';
+import { ImgUrl } from '../../model';
 
-const Testimonial = () => {
+export interface TestimonialRes {
+    _createdAt: string
+    _id: string
+    _rev: string
+    _type: string
+    _updatedAt: string
+    company: string
+    feedback: string
+    imgurl: ImgUrl
+    name: string
+}
+export interface Brand {
+    _createdAt: string
+    _id: string
+    _rev: string
+    _type: string
+    _updatedAt: string
+    imgUrl: ImgUrl
+    name: string
+}
+const TestimonialCom = () => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const [testimonials, setTestimonials] = useState<any[]>([]);
-    const [brands, setBrands] = useState<any[]>([]);
+    const [testimonials, setTestimonials] = useState<TestimonialRes[]>([]);
+    const [brands, setBrands] = useState<Brand[]>([]);
 
     const handleClick = (index: number) => {
         setCurrentIndex(index);
@@ -74,7 +95,7 @@ const Testimonial = () => {
 };
 
 export default AppWrap(
-    MotionWrap(Testimonial, 'app__testimonial'),
+    MotionWrap(TestimonialCom, 'app__testimonial'),
     'testimonial',
     'app__primarybg',
 );
