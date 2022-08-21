@@ -1,8 +1,9 @@
-import type { NextPage } from "next";
 import Head from "next/head";
-import { Hero, Testimonial } from "../components/Home";
+import { ReactNode } from "react";
+import Footer from "./common/Footer";
+import Header from "./common/Header";
 
-const Home: NextPage = () => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Head>
@@ -10,12 +11,11 @@ const Home: NextPage = () => {
         <meta name="description" content="Software engineer from faridabad" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Hero />
-        <Testimonial />
-      </main>
+      <Header />
+      {children}
+      <Footer />
     </>
   );
 };
 
-export default Home;
+export default Layout;
